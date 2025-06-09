@@ -72,20 +72,27 @@ if st.button("Perguntar") or user_question:
     else:
         with st.spinner("Consultando..."):
             resposta = query_engine.query(user_question)
-       st.markdown("### ✅ Resposta:")
+            st.markdown("### ✅ Resposta:")
 
-# Se for uma string direta (como parece)
-if hasattr(resposta, "response"):
-    texto = resposta.response.strip()
-else:
-    texto = str(resposta).strip()
-
-# Formatação opcional: negrito em valores detectados
-import re
-texto_formatado = re.sub(r'(?<=is )(.*?)(?=,| with)', r'**\1**', texto)
-texto_formatado = re.sub(r'(\d+ transactions?)', r'**\1**', texto_formatado)
-
-st.markdown(texto_formatado)
-
+            # Se for uma string direta (como parece)
+            if hasattr(resposta, "response"):
+                texto = resposta.response.strip()
+            else:
+                texto = str(resposta).strip()
+            
+            # Formatação opcional: negrito em valores detectados
+            import re
+            texto_formatado = re.sub(r'(?<=is )(.*?)(?=,| with)', r'**\1**', texto)
+            texto_formatado = re.sub(r'(\d+ transactions?)', r'**\1**', texto_formatado)
+            
+            st.markdown(texto_formatado)
+            
+            # Mostrar fontes usadas (opcional)
+            if hasattr(resposta, "source_nodes"):
+                arquivos = list({n.metadata.get("filename", "desconhecido") for n in resposta.source_nodes})
+                if arquivos:
+                    st.markdown("**📁 Arquivos utilizados na resposta:**")
+                    for arq in arquivos:
+                        st.markdown(f"- `{arq}`")
 
 st.caption("App demo usando Streamlit + LlamaIndex + Groq + Embeddings HF")
