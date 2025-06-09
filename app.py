@@ -19,7 +19,7 @@ def extract_zip(zip_path, extract_path):
 
 # --- PARTE DE SETUP ---
 st.set_page_config(page_title="Pergunte sobre Notas Fiscais!", page_icon="🧾")
-st.title("Pergunte sobre as Notas Fiscais de Janeiro/2024")
+st.title("Pergunte sobre as Notas Fiscais de 2024")
 
 with st.expander("Como funciona?"):
     st.write("""
