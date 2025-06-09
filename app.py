@@ -72,7 +72,20 @@ if st.button("Perguntar") or user_question:
     else:
         with st.spinner("Consultando..."):
             resposta = query_engine.query(user_question)
-        st.success("Resposta:")
-        st.write(resposta)
+       st.markdown("### ✅ Resposta:")
+
+# Se for uma string direta (como parece)
+if hasattr(resposta, "response"):
+    texto = resposta.response.strip()
+else:
+    texto = str(resposta).strip()
+
+# Formatação opcional: negrito em valores detectados
+import re
+texto_formatado = re.sub(r'(?<=is )(.*?)(?=,| with)', r'**\1**', texto)
+texto_formatado = re.sub(r'(\d+ transactions?)', r'**\1**', texto_formatado)
+
+st.markdown(texto_formatado)
+
 
 st.caption("App demo usando Streamlit + LlamaIndex + Groq + Embeddings HF")
