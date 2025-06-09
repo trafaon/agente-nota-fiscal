@@ -4,3 +4,4 @@ llama-index
 llama-index-llms-groq
 llama-index-readers-file
 llama-index-embeddings-huggingface
+pandas
