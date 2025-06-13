@@ -7,3 +7,4 @@ llama-index-readers-file==0.1.4
 llama-index-embeddings-huggingface==0.1.4
 transformers>=4.40.0
 sentence-transformers>=2.2.2
+
