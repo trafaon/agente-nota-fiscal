@@ -7,7 +7,7 @@ from llama_index.llms.groq import Groq
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.readers.file import CSVReader
 from llama_index.core.tools import QueryEngineTool
-from llama_index.query_engine import SubQuestionQueryEngine
+from llama_index.core.query_engine import SubQuestionQueryEngine
 import zipfile
 
 # Função para extrair o ZIP (executa uma única vez)
