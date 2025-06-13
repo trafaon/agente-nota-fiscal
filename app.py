@@ -6,7 +6,8 @@ from llama_index.core import Settings, VectorStoreIndex
 from llama_index.llms.groq import Groq
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.readers.file import CSVReader
-from llama_index.tools.query_engine_tool import QueryEngineTool
+from llama_index.core.tools import QueryEngineTool
+from llama_index.query_engine import SubQuestionQueryEngine
 import zipfile
 
 # Função para extrair o ZIP (executa uma única vez)
@@ -49,9 +50,6 @@ if not groq_api_key:
 # Definir modelos de embeddings e LLM
 Settings.embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
 Settings.llm = Groq(model="llama3-8b-8192", api_key=groq_api_key)
-
-from llama_index.tools.query_engine import QueryEngineTool
-from llama_index.query_engine import SubQuestionQueryEngine
 
 # --- INDEXAÇÃO DOS DADOS ---
 @st.cache_resource(show_spinner="Indexando os dados, aguarde um instante...")
