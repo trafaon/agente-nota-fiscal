@@ -93,6 +93,6 @@ if st.button("Perguntar") or user_question:
                 if arquivos:
                     st.markdown("**📁 Arquivos utilizados na resposta:**")
                     for arq in arquivos:
-                        st.markdown(f"- {arq}")
+                        st.markdown(f"- `{arq}`")
 
 st.caption("App demo usando Streamlit + LlamaIndex + Groq + Embeddings HF")
