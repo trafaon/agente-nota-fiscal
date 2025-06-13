@@ -49,18 +49,40 @@ if not groq_api_key:
 Settings.embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
 Settings.llm = Groq(model="llama3-8b-8192", api_key=groq_api_key)
 
+from llama_index.tools.query_engine import QueryEngineTool
+from llama_index.query_engine import SubQuestionQueryEngine
+
 # --- INDEXAÇÃO DOS DADOS ---
 @st.cache_resource(show_spinner="Indexando os dados, aguarde um instante...")
-def load_index():
+def build_query_engine():
     reader = CSVReader()
     cabecalho_docs = reader.load_data(file=Path(cabecalho_path))
     itens_docs = reader.load_data(file=Path(itens_path))
-    docs = cabecalho_docs + itens_docs
-    index = VectorStoreIndex.from_documents(docs)
-    return index
 
-index = load_index()
-query_engine = index.as_query_engine()
+    # Criar índices separados
+    cabecalho_index = VectorStoreIndex.from_documents(cabecalho_docs)
+    itens_index = VectorStoreIndex.from_documents(itens_docs)
+
+    # Criar motores separados
+    cabecalho_engine = cabecalho_index.as_query_engine()
+    itens_engine = itens_index.as_query_engine()
+
+    # Associar como ferramentas para o SubQuestionQueryEngine
+    tools = [
+        QueryEngineTool(
+            query_engine=cabecalho_engine,
+            metadata={"name": "cabecalho", "description": "Dados gerais das notas fiscais: fornecedor, valor total, datas, etc."}
+        ),
+        QueryEngineTool(
+            query_engine=itens_engine,
+            metadata={"name": "itens", "description": "Detalhamento dos itens das notas fiscais: produto, quantidade, unidade, etc."}
+        )
+    ]
+
+    return SubQuestionQueryEngine.from_defaults(tools=tools)
+
+query_engine = build_query_engine()
+
 
 # --- INTERFACE ---
 st.subheader("Faça sua pergunta")
