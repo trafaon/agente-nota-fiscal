@@ -3,7 +3,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from llama_index.core import Settings, VectorStoreIndex
-from llama_index.llms.groq import Groq
+from llama_index.llms.openai import OpenAI
+# from llama_index.llms.groq import Groq
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.readers.file import CSVReader
 from llama_index.core.query_engine.sub_question_query_engine import SubQuestionQueryEngine
@@ -26,7 +27,7 @@ with st.expander("Como funciona?"):
     st.write("""
         Faça perguntas em linguagem natural sobre os dados das 100 notas fiscais selecionadas.
         Exemplos:  
-        - Qual o fornecedor que teve maior valor recebido?  
+        - Qual o fornecedor que teve maior montante recebido?  
         - Qual item teve maior volume entregue (em quantidade)?  
         - Quantas notas são do fornecedor X?  
     """)
@@ -41,22 +42,34 @@ itens_path = os.path.join(extract_path, "202401_NFs_Itens.csv")
 
 # --- AMBIENTE E LLM ---
 load_dotenv()
-groq_api_key = os.getenv("GROQ_API_KEY")
-if not groq_api_key:
-    st.error("GROQ_API_KEY não encontrada no .env")
+openai_api_key = os.getenv("OPENAI_API_KEY")
+if not openai_api_key:
+    st.error("OPENAI_API_KEY não encontrada no .env")
     st.stop()
 
 # Definir modelos de embeddings e LLM
 Settings.embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
-Settings.llm = Groq(model="llama3-8b-8192", api_key=groq_api_key)
+Settings.llm = OpenAI(model="gpt-3.5-turbo", api_key=openai_api_key)
 
 # --- INDEXAÇÃO DOS DADOS ---
 @st.cache_resource(show_spinner="Indexando os dados, aguarde um instante...")
 def load_index():
-    reader = CSVReader()
+    # Configurar o CSVReader para criar um documento por linha
+    reader = CSVReader(concat_rows=False)
     cabecalho_docs = reader.load_data(file=Path(cabecalho_path))
     itens_docs = reader.load_data(file=Path(itens_path))
+    
+    # Adicionar metadados para distinguir os tipos de documento
+    for doc in cabecalho_docs:
+        doc.metadata["tipo"] = "cabecalho"
+    for doc in itens_docs:
+        doc.metadata["tipo"] = "item"
+    
     docs = cabecalho_docs + itens_docs
+    
+    # Debug: mostrar quantos documentos foram carregados
+    st.write(f"📊 Documentos carregados: {len(cabecalho_docs)} cabeçalhos + {len(itens_docs)} itens = {len(docs)} total")
+    
     index = VectorStoreIndex.from_documents(docs)
     return index
 
@@ -96,4 +109,4 @@ if st.button("Perguntar") or user_question:
                     for arq in arquivos:
                         st.markdown(f"- `{arq}`")
 
-st.caption("App demo usando Streamlit + LlamaIndex + Groq + Embeddings HF")
+st.caption("App demo usando Streamlit + LlamaIndex + OpenAI + Embeddings HF")
