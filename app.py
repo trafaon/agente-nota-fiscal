@@ -26,7 +26,7 @@ with st.expander("Como funciona?"):
     st.write("""
         Faça perguntas em linguagem natural sobre os dados das 100 notas fiscais selecionadas.
         Exemplos:  
-        - Qual o fornecedor que teve maior montante recebido?  
+        - Qual o fornecedor que teve maior valor recebido?  
         - Qual item teve maior volume entregue (em quantidade)?  
         - Quantas notas são do fornecedor X?  
     """)
