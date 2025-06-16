@@ -11,6 +11,9 @@ __pycache__/
 # no seu .gitignore
 .env
 
+#testes
+test*.py
+
 # Distribution / packaging
 .Python
 build/

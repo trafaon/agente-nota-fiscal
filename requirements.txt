@@ -5,6 +5,14 @@ pandas>=1.5.0
 numpy>=1.24.0
 Pillow>=9.0.0
 
+# Para processamento de dados
+openpyxl>=3.1.0
+xlsxwriter>=3.1.0
+
+# Para o banco
+supabase
+toml
+
 # LlamaIndex core e componentes específicos
 llama-index>=0.9.0
 llama-index-core>=0.10.0
@@ -13,11 +21,3 @@ llama-index-embeddings-openai>=0.1.0
 llama-index-agent-openai>=0.2.0
 llama-index-readers-file>=0.1.0
 llama-index-experimental
-
-# Para processamento de dados
-openpyxl>=3.1.0
-xlsxwriter>=3.1.0
-
-# Para o banco
-supabase
-toml
