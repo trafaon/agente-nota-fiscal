@@ -1,6 +1,3 @@
-Aqui está o conteúdo do `README.md` completo e formatado em **Markdown**:
-
-```markdown
 # 🧾 Agente de Notas Fiscais
 
 Um aplicativo inteligente que permite fazer perguntas em linguagem natural sobre dados de notas fiscais usando IA.
@@ -48,8 +45,6 @@ Um aplicativo inteligente que permite fazer perguntas em linguagem natural sobre
 
 ## 📁 Estrutura do Projeto
 
-```
-
 📦 agente-nota-fiscal
 ├── .streamlit/
 │   └── secrets.toml          # (opcional) credenciais da OpenAI e Supabase
@@ -60,8 +55,6 @@ Um aplicativo inteligente que permite fazer perguntas em linguagem natural sobre
 ├── .env                      # (opcional) fallback para chaves
 └── README.md                 # Este arquivo
 
-````
-
 ---
 
 ## 🧪 Executar Localmente
@@ -70,42 +63,43 @@ Um aplicativo inteligente que permite fazer perguntas em linguagem natural sobre
    ```bash
    git clone https://github.com/trafaon/agente-nota-fiscal.git
    cd agente-nota-fiscal
-````
+   ```
+
 
 2. Crie e ative um ambiente virtual:
-
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate    # Linux/macOS
-   .venv\Scripts\activate       # Windows
-   ```
+```bash
+python -m venv .venv
+source .venv/bin/activate    # Linux/macOS
+.venv\Scripts\activate       # Windows
+ ```
 
 3. Instale as dependências:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+Copiar
+Editar
+pip install -r requirements.txt
+```
 
-4. Configure suas chaves em `.env` ou `.streamlit/secrets.toml`:
+4. Configure suas chaves em .env ou .streamlit/secrets.toml:
+```toml
+Copiar
+Editar
+OPENAI_API_KEY = "sua-chave"
+SUPABASE_URL = "https://xxxxx.supabase.co"
+SUPABASE_KEY = "sua-chave"
+```
 
-   ```toml
-   OPENAI_API_KEY = "sua-chave"
-   SUPABASE_URL = "https://xxxxx.supabase.co"
-   SUPABASE_KEY = "sua-chave"
-   ```
-
-5. Coloque o arquivo `202401_NFs.zip` na raiz do projeto com os arquivos:
-
-   * `202401_NFs_Cabecalho.csv`
-   * `202401_NFs_Itens.csv`
+5. Coloque o arquivo 202401_NFs.zip na raiz do projeto com os arquivos:
+202401_NFs_Cabecalho.csv
+202401_NFs_Itens.csv
 
 6. Execute o app:
-
-   ```bash
-   streamlit run app.py
-   ```
-
----
+```bash
+Copiar
+Editar
+streamlit run app.py
+```
 
 ## 🙋‍♀️ Contribuições
 
