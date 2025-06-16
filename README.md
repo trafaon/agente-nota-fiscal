@@ -60,11 +60,11 @@ Um aplicativo inteligente que permite fazer perguntas em linguagem natural sobre
 ## 🧪 Executar Localmente
 
 1. Clone o repositório:
-   ```bash
-   git clone https://github.com/trafaon/agente-nota-fiscal.git
-   cd agente-nota-fiscal
-   ```
 
+```bash
+git clone https://github.com/trafaon/agente-nota-fiscal.git
+cd agente-nota-fiscal
+```
 
 2. Crie e ative um ambiente virtual:
 ```bash
